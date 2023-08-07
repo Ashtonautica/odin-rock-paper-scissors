@@ -16,30 +16,64 @@ function getComputerChoice() {
 function playRound(playerSelection, computerSelection) {
     let formattedPlayerSelection = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase();
     if (formattedPlayerSelection == computerSelection) {
-        return `A draw! Both sides chose ${formattedPlayerSelection}`;
+        return 0;
     }
     if (formattedPlayerSelection == "Rock") {
         if (computerSelection == "Paper") {
-            return "You lose! Paper beats Rock"
+            return -1;
         }
         else if (computerSelection == "Scissors") {
-            return "You win! Rock beats Scissors"
+            return 1;
         }
     }
     if (formattedPlayerSelection == "Paper") {
         if (computerSelection == "Rock") {
-            return "You win! Paper beats Rock"
+            return 1;
         }
         else if (computerSelection == "Scissors") {
-            return "You lose! Scissors beats Paper"
+            return -1;
         }
     }
     if (formattedPlayerSelection == "Scissors") {
         if (computerSelection == "Rock") {
-            return "You lose! Rock beats Scissors"
+            return -1;
         }
         else if (computerSelection == "Paper") {
-            return "You win! Scissors beats Paper"
+            return 1;
         }
     }
 }
+
+function game() {
+    let playerScore = 0;
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = prompt("Rock, Paper or Scissors?");
+        let computerSelection = getComputerChoice();
+        console.log(`Your opponent chose ${computerSelection}`);
+        let result = playRound(playerSelection, computerSelection);
+        playerScore += result;
+        switch (result) {
+            case -1:
+                console.log("You lost the round.");
+                break;
+            case 0:
+                console.log("This round was a draw.");
+                break;
+            case 1:
+                console.log("You won the round.")
+                break;
+        }
+        console.log(`Your score is ${playerScore}`);
+    }
+    if (playerScore < 0) {
+        console.log("You lost the game.")
+    }
+    else if (playerScore > 0) {
+        console.log("You won the game.")
+    }
+    else {
+        console.log("The game is tied.")
+    }
+}
+
+game();
