@@ -46,34 +46,49 @@ function playRound(playerSelection, computerSelection) {
 
 function game() {
     let playerScore = 0;
-    for (let i = 0; i < 5; i++) {
-        let playerSelection = prompt("Rock, Paper or Scissors?");
-        let computerSelection = getComputerChoice();
-        console.log(`Your opponent chose ${computerSelection}`);
-        let result = playRound(playerSelection, computerSelection);
-        playerScore += result;
-        switch (result) {
-            case -1:
-                console.log("You lost the round.");
-                break;
-            case 0:
-                console.log("This round was a draw.");
-                break;
-            case 1:
-                console.log("You won the round.")
-                break;
-        }
-        console.log(`Your score is ${playerScore}`);
-    }
-    if (playerScore < 0) {
-        console.log("You lost the game.")
-    }
-    else if (playerScore > 0) {
-        console.log("You won the game.")
-    }
-    else {
-        console.log("The game is tied.")
-    }
+    let computerScore = 0;
+    let resultsLog = document.querySelector("#resultsLog");
+    let scoreboard = document.querySelector("#scoreboard");
+    function updateScoreboard() {
+        scoreboard.textContent = `${playerScore} : ${computerScore}`;
+    };
+    updateScoreboard();
+
+    document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("click", event => {
+            let playerSelection = event.target.id;
+            let computerSelection = getComputerChoice();
+            let result = playRound(playerSelection, computerSelection);
+    
+            let resultMessage = `Your opponent chose ${computerSelection}. `;
+            switch (result) {
+                case -1:
+                    resultMessage += "You lost the round. ";
+                    computerScore += 1;
+                    break;
+                case 0:
+                    resultMessage += "This round was a draw. ";
+                    break;
+                case 1:
+                    resultMessage += "You won the round. ";
+                    playerScore += 1
+                    break;
+            }
+    
+            if (playerScore == 5 || computerScore == 5) {
+                playerScore = 0;
+                computerScore = 0;
+                if (playerScore == 5) {
+                    resultMessage += "You won the game!"
+                }
+                else {
+                    resultMessage += "Your opponent won the game."
+                }
+            }
+            updateScoreboard();
+            resultsLog.textContent = resultMessage;
+        });
+    })
 }
 
 game();
