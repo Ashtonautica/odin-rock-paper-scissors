@@ -76,14 +76,14 @@ function game() {
             }
     
             if (playerScore == 5 || computerScore == 5) {
-                playerScore = 0;
-                computerScore = 0;
                 if (playerScore == 5) {
                     resultMessage += "You won the game!"
                 }
                 else {
                     resultMessage += "Your opponent won the game."
                 }
+                playerScore = 0;
+                computerScore = 0;
             }
             updateScoreboard();
             resultsLog.textContent = resultMessage;
